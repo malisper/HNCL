@@ -1,6 +1,6 @@
 (in-package :hncl)
 
-(defvar opmeths* (table)
+(defvar opmeths* (table :test #'iso)
   "A table mapping from a list containing a tag an attribute to a
    procedure that formats the attribute.")
 
