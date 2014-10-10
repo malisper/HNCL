@@ -1,4 +1,4 @@
 (defpackage :hncl
   (:use :clamp :experimental)
   (:shadowing-import-from :experimental
-    :def :fn :coerce))
+    :def :defmemo :mac :fn :coerce))
