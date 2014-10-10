@@ -17,20 +17,6 @@
    opmeths*."
   `(= (opmeth ',tag ',opt) ',f))
 
-(defvar hexreps* (table)
-  "A table mapping from the color values to a string of the hex
-   value.")
-
-(up i 0 256 (= (gethash i hexreps*)
-               (let s (tostring (prf "~16R" i))
-                 (if (is (len s) 1) (mkstr "0" s) s))))
-
-(defmemo hexrep (col)
-  "Lookup the hex string for this color."
-  (mkstr (gethash col!r hexreps*)
-         (gethash col!g hexreps*)
-         (gethash col!b hexreps*)))
-
 (def opcolor (key val)
   "Generates code to format the attribute KEY with the value VAL as
    a color."

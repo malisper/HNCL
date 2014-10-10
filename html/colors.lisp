@@ -30,3 +30,17 @@
 (defparameter linkblue* (color 0 0 190)   "The color of a link.")
 (defparameter orange*   (color 255 102 0) "The color orange.")
 (defparameter darkblue* (color 0 0 120)   "The color darkblue.")
+
+(defvar hexreps* (table)
+  "A table mapping from the color values to a string of the hex
+   value.")
+
+(up i 0 256 (= (gethash i hexreps*)
+               (let s (tostring (prf "~16R" i))
+                 (if (is (len s) 1) (mkstr "0" s) s))))
+
+(defmemo hexrep (col)
+  "Lookup the hex string for this color."
+  (mkstr (gethash col!r hexreps*)
+         (gethash col!g hexreps*)
+         (gethash col!b hexreps*)))

@@ -56,11 +56,11 @@
       (let ((opt val) . rest) options
         (iflet meth (if (is opt 'style) #'opstring (opmeth spec opt))
           (if val
-                 (cons (if (precomputable-tagopt val)
-                           (tostring (eval (call meth opt val)))
-                           (call meth opt val))
-                       (tag-options spec rest))
-                 (tag-options spec rest))
+              (cons (if (precomputable-tagopt val)
+                        (tostring (eval (call meth opt val)))
+                        (call meth opt val))
+                    (tag-options spec rest))
+              (tag-options spec rest))
           (do
             (pr "<!-- ignoring " opt " for " spec "-->")
             (tag-options spec rest))))))
