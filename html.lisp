@@ -13,7 +13,7 @@
   (errsafe (parse-integer str :radix 16)))
 
 (defmemo hex->color (str)
-  "Convert a string represting a color to the given color."
+  "Convert a string representing a color to the given color."
   (and (is (len str) 6)
        (with (r (dehex (cut str 0 2))
               g (dehex (cut str 2 4))
@@ -22,7 +22,7 @@
               (color r g b)))))
 
 (defmemo gray (n)
-  "Return a gray color whose brightness is based on N."
+  "Equivalent to (color n n n)."
   (color n n n))
 
 (defparameter white*    (gray 255)        "The color white.")
@@ -30,5 +30,3 @@
 (defparameter linkblue* (color 0 0 190)   "The color of a link.")
 (defparameter orange*   (color 255 102 0) "The color orange.")
 (defparameter darkblue* (color 0 0 120)   "The color darkblue.")
-
-
