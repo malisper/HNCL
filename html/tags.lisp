@@ -21,11 +21,11 @@
 (def start-tag (spec)
   "Generates code that prints the starting tag based on SPEC."
   (if (atom spec)
-      `(pr ,(mkstr "<" spec ">"))
+      `(pr ,(downcase (mkstr "<" spec ">")))
       (let opts (tag-options (car spec) (group (cdr spec)))
         (if (all #'stringp opts)
-            `(pr ,(mkstr "<" (car spec) (apply #'mkstr opts) ">"))
-            `(do (pr ,(mkstr "<" (car spec)))
+            `(pr ,(mkstr "<" (downcase (car spec)) (apply #'mkstr opts) ">"))
+            `(do (pr (downcase ,(mkstr "<" (car spec))))
                  ;; Iterate through the options. If an option is a
                  ;; string, print it, otherwise evaluate it as code.
                  ,@(map (fn (opt)
@@ -37,7 +37,7 @@
 
 (def end-tag (spec)
   "Generates code that prints the ending tag based on SPEC."
- `(pr ,(mkstr "</" (carif spec) ">")))
+ `(pr ,(downcase (mkstr "</" (carif spec) ">"))))
 
 (def literal (x)
   "Is this a literal object?"
