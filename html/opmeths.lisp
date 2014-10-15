@@ -28,7 +28,11 @@
   "Generates code to format the attribute KEY with the value VAL as
    a string."
   `(awhen ,val
-     (pr ,(downcase (mkstr " " key "=\"")) it #\")))
+     (pr ,(downcase (mkstr " " key "=\""))
+         (if (symbolp it)
+             (downcase it)
+             it)
+         #\")))
 
 (def opnum (key val)
   "Generates code to format the attribute KEY with the value VAL as
@@ -38,7 +42,7 @@
 
 (def opsym (key val)
   "Generates code to set the attribute KEY to value VAL."
-  `(pr ,(downcase (mkstr " " key "=")) ,val))
+  `(pr ,(downcase (mkstr " " key "=")) (downcase ,val)))
 
 (def opsel (key val)
   (declare (ignore key))
@@ -69,4 +73,4 @@
                 #\>  "&#62"
                 #\"  "&#34"
                 #\&  "&#38"
-                :else c))))
+                t    c))))
