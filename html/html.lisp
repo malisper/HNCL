@@ -141,17 +141,20 @@
   (gentag input type 'text name name value val size size))
 
 (mac inputs args
-  "Creates a table of input tags with the format: name - size - 
-   value. The size can either be an atom or a list containing
+  "Creates a table of input tags with the format: name - label - size
+   - value. The size can either be an atom or a list containing
    (row col)."
   `(tag (table border 0)
      ,@(map (fn ((name label len text))
               (w/uniq (gl gt)
                 `(let ,gl ,len
-                   (tr (td (pr ',label ":"))
+                   (tr (td  (pr ',(if (symbolp label)
+                                      (downcase label)
+                                      label)
+                                ":"))
                        (if (consp ,gl)
                            (td (textarea ',name (car ,gl) (cadr ,gl)
-                                 (let ,gt ,text (if ,gt (pr ,gt)))))
+                                 (iflet ,gt ,text (pr ,gt))))
                            (td (gentag input
                                        type ',(if (is label 'password)
                                                   'password
