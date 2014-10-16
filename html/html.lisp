@@ -100,7 +100,7 @@
   `(tag (table width ,w) (trtd ,@body)))
 
 (def cellpr (x)
-  "Prints X or &nbsp if contents is nil."
+  "If X, print it, otherwise print '&nbsp'."
   (pr (or x "&nbsp")))
 
 (def submit (? (val "submit"))
