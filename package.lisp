@@ -2,3 +2,5 @@
   (:use :clamp :experimental)
   (:shadowing-import-from :experimental
     :def :defmemo :mac :fn :coerce))
+
+(setf *print-case* :downcase)

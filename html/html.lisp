@@ -148,10 +148,7 @@
      ,@(map (fn ((name label len text))
               (w/uniq (gl gt)
                 `(let ,gl ,len
-                   (tr (td  (pr ',(if (symbolp label)
-                                      (downcase label)
-                                      label)
-                                ":"))
+                   (tr (td  (pr ',label ":"))
                        (if (consp ,gl)
                            (td (textarea ',name (car ,gl) (cadr ,gl)
                                  (iflet ,gt ,text (pr ,gt))))

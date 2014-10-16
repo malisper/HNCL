@@ -11,4 +11,6 @@
                         :serial t
                         :components ((:file "colors")
                                      (:file "opmeths")
-                                     (:file "attributes")))))
+                                     (:file "attributes")
+                                     (:file "tags")
+                                     (:file "html")))))

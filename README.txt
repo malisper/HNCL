@@ -11,3 +11,7 @@ There are two reasons why I started this project. The first one is to
 get a better understanding of how HN works, as well as web development
 in general. The second is similar to the reason I created Clamp. To
 provide a version of HN written in a non-toy language.
+
+Be careful if you try to use this with another package because the
+variable *print-case* is set to :downcase so that the html is printed
+correctly.

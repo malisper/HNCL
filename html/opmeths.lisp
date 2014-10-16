@@ -22,27 +22,23 @@
    a color."
   (w/uniq gv
     `(whenlet ,gv ,val
-       (pr ,(downcase (mkstr " " key "=#")) (hexrep ,gv)))))
+       (pr ,(mkstr " " key "=#") (hexrep ,gv)))))
 
 (def opstring (key val)
   "Generates code to format the attribute KEY with the value VAL as
    a string."
   `(awhen ,val
-     (pr ,(downcase (mkstr " " key "=\""))
-         (if (symbolp it)
-             (downcase it)
-             it)
-         #\")))
+     (pr ,(mkstr " " key "=\"") it #\")))
 
 (def opnum (key val)
   "Generates code to format the attribute KEY with the value VAL as
    a number."
   `(awhen ,val
-     (pr ,(downcase (mkstr " " key "=")) it)))
+     (pr ,(mkstr " " key "=") it)))
 
 (def opsym (key val)
   "Generates code to set the attribute KEY to value VAL."
-  `(pr ,(downcase (mkstr " " key "=")) (downcase ,val)))
+  `(pr ,(mkstr " " key "=") ,val))
 
 (def opsel (key val)
   (declare (ignore key))
@@ -61,7 +57,7 @@
    that contains special symbols which need to be replaced
    (ie '<', '>', '&', etc)"
   `(awhen ,val
-     (pr ,(downcase (mkstr " " key "=\"")))
+     (pr ,(mkstr " " key "=\""))
      (if (isa it 'string) (pr-escaped it) (pr it))
      (pr #\")))
 
