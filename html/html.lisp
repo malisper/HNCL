@@ -58,10 +58,10 @@
       (tag (option selected (is i sel))
         (pr i)))))
 
-(def whitepage body
+(mac whitepage body
   "Creates a basic white page."
   `(tag html
-     (tag (body bgcolor white alink linkblue)
+     (tag (body bgcolor white* alink linkblue*)
        ,@body)))
 
 (def errpage args
