@@ -104,7 +104,7 @@
   (pr (or x "&nbsp")))
 
 (def submit (? (val "submit"))
-  "Prints the tags for submit button."
+  "Prints the tags for a submit button."
   (gentag input type 'submit value val))
 
 (def but (? (text "submit") (name nil))
@@ -167,3 +167,88 @@
   (gentag input type (if pwd 'password 'text) name name size chars)
   (sp)
   (submit btext))
+
+(mac cdata body
+  "Evaluates BODY and surrounds the output in a cdata tag."
+  `(do (pr "<![CDATA[")
+       ,@body
+       (pr "]]>")))
+
+(def eschtml (str)
+  "Returns the input string, but with the characters <, >, \", ', and
+   & with the html codes."
+  (tostring
+    (each c str
+      (pr (case c #\< "&#60"
+                  #\> "&#62"
+                  #\& "&#38"
+                  t   c)))))
+
+(def nbsp ()
+  "Outputs a non-breaking space."
+  (pr "&nbsp;"))
+
+(def link (text ? (dest text) color)
+  "Prints tags for a link with the given text, destination and 
+   color."
+  (tag (a href dest)
+    (tag-if color (font color color)
+      (pr text))))
+
+(def underlink (text ? (dest text))
+  "Prints tags for a link and underline the text of the link."
+  (tag (a href dest) (tag u (pr text))))
+
+(def striptags (s)
+  "Remove all of the tags from the given string."
+  (let intag nil
+    (tostring
+      (each c s
+        (if (is c #\<) (= intag t)
+            (is c #\>) (= intag nil)
+            (no intag) (pr c))))))
+
+(def clean-url (u)
+  "Removes all characters that are \", ', <, or >."
+  (rem [in _ #\" #\' #\< #\>] u))
+
+(def shortlink (url)
+  "Print a link. If URL is longer than seven characters, cut off the
+   first seven characters."
+  (unless (or (no url) (< (len url) 7))
+    (link (cut url 7) url)))
+
+(def parafy (str)
+  "Return a string with an opening paragraph tag inserted after every
+   blank line."
+  (let ink nil
+    (tostring
+      (each c str
+        (pr c)
+        (unless (whitec c) (= ink t))
+        (when (is c #\newline)
+          (unless ink (pr "<p>"))
+          (= ink nil))))))
+
+(mac spanclass (name . body)
+  "Evaluates BODY, and surrounds the output with span tags."
+  `(tag (span class ',name) ,@body))
+
+(def pagemessage (text)
+  "Unless text is nil, print it followed by two break tags."
+  (when text (prn text) (br2)))
+
+(def valid-url (url)
+  "Is this a valid url?"
+  (and (len> url 10)
+       (or (begins url "http://")
+           (begins url "https://"))
+       (~find [in _ #\< #\> #\" #\'] url)))
+
+(mac fontcolor (c . body)
+  "Evaluates BODY and surrounds the output with tags for the font to
+   be C."
+  (w/uniq g
+    `(iflet ,g ,c
+       (tag (font color ,g) ,@body)
+       (do ,@body))))
